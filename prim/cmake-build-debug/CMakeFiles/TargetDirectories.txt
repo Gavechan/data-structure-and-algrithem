@@ -1,0 +1,3 @@
+F:/Userfile/files/codeplace/prim/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+F:/Userfile/files/codeplace/prim/cmake-build-debug/CMakeFiles/prim.dir
+F:/Userfile/files/codeplace/prim/cmake-build-debug/CMakeFiles/edit_cache.dir
