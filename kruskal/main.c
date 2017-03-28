@@ -8,22 +8,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-typedef char VertexType;                //¶¥µãÀàĞÍÓ¦ÓÉÓÃ»§¶¨Òå
-typedef int EdgeType;                   //±ßÉÏµÄÈ¨ÖµÀàĞÍÓ¦ÓÉÓÃ»§¶¨Òå
+typedef char VertexType;                //é¡¶ç‚¹ç±»å‹åº”ç”±ç”¨æˆ·å®šä¹‰
+typedef int EdgeType;                   //è¾¹ä¸Šçš„æƒå€¼ç±»å‹åº”ç”±ç”¨æˆ·å®šä¹‰
 
-#define MAXVEX  100             //×î´ó¶¥µãÊı£¬Ó¦ÓÉÓÃ»§¶¨Òå
-#define INFINITY    65535               //ÓÃ65535À´´ú±íÎŞÇî´ó
+#define MAXVEX  100             //æœ€å¤§é¡¶ç‚¹æ•°ï¼Œåº”ç”±ç”¨æˆ·å®šä¹‰
+#define INFINITY    65535               //ç”¨65535æ¥ä»£è¡¨æ— ç©·å¤§
 #define DEBUG
-//int edge[MAXVEX][MAXVEX]={/*ÊäÈëµÄÁÚ½Ó¾ØÕó*/};                      //´æ´¢ÁËËùÓĞ±ßµÄ¼¯ºÏ
-int lowcost[MAXVEX]={0};                                         //¼ÇÂ¼VnewÖĞÃ¿¸öµãµ½VÖĞÁÚ½ÓµãµÄ×î¶Ì±ß
-int visit[MAXVEX];                                             //±ê¼ÇÄ³µãÊÇ·ñ¼ÓÈëVnew
-int adjecent[MAXVEX]={0};                                        //¼ÇÂ¼VÖĞÓëVnew×îÁÚ½üµÄµã
+//int edge[MAXVEX][MAXVEX]={/*è¾“å…¥çš„é‚»æ¥çŸ©é˜µ*/};                      //å­˜å‚¨äº†æ‰€æœ‰è¾¹çš„é›†åˆ
+int lowcost[MAXVEX]={0};                                         //è®°å½•Vnewä¸­æ¯ä¸ªç‚¹åˆ°Vä¸­é‚»æ¥ç‚¹çš„æœ€çŸ­è¾¹
+int visit[MAXVEX];                                             //æ ‡è®°æŸç‚¹æ˜¯å¦åŠ å…¥Vnew
+int adjecent[MAXVEX]={0};                                        //è®°å½•Vä¸­ä¸Vnewæœ€é‚»è¿‘çš„ç‚¹
 
 typedef struct
 {
-    VertexType vexs[MAXVEX];            //¶¥µã±í
-    EdgeType   arc[MAXVEX][MAXVEX];         //ÁÚ½Ó¾ØÕó£¬¿É¿´×÷±ß
-    int numVertexes, numEdges;      //Í¼ÖĞµ±Ç°µÄ¶¥µãÊıºÍ±ßÊı
+    VertexType vexs[MAXVEX];            //é¡¶ç‚¹è¡¨
+    EdgeType   arc[MAXVEX][MAXVEX];         //é‚»æ¥çŸ©é˜µï¼Œå¯çœ‹ä½œè¾¹
+    int numVertexes, numEdges;      //å›¾ä¸­å½“å‰çš„é¡¶ç‚¹æ•°å’Œè¾¹æ•°
 }Graph;
 
 typedef struct edge
@@ -33,7 +33,7 @@ typedef struct edge
     int weight;
 }Edge;
 
-//¶¨Î»
+//å®šä½
 int locates(Graph *g, char ch)
 {
     int i = 0;
@@ -52,11 +52,11 @@ int locates(Graph *g, char ch)
     return i;
 }
 
-//½¨Á¢Ò»¸öÎŞÏòÍøÍ¼µÄÁÚ½Ó¾ØÕó±íÊ¾
+//å»ºç«‹ä¸€ä¸ªæ— å‘ç½‘å›¾çš„é‚»æ¥çŸ©é˜µè¡¨ç¤º
 void CreateGraph(Graph *g)
 {
     int i, j, k, w;
-    printf("ÊäÈë¶¥µãÊıºÍ±ßÊı:\n");
+    printf("Please input vertexes and edges: \n");
     scanf("%d %d", &(g->numVertexes), &(g->numEdges));
 
 //#ifdef DEBUG
@@ -85,13 +85,13 @@ void CreateGraph(Graph *g)
     {
         for(j = 0; j < g->numEdges; j++)
         {
-            g->arc[i][j] = INFINITY; //ÁÚ½Ó¾ØÕó³õÊ¼»¯
+            g->arc[i][j] = INFINITY; //é‚»æ¥çŸ©é˜µåˆå§‹åŒ–
         }
     }
     for(k = 0; k < g->numEdges; k++)
     {
         char p, q;
-        printf("ÊäÈë±ß(vi,vj)ÉÏµÄÏÂ±êi£¬ÏÂ±êjºÍÈ¨Öµ:\n");
+        printf("input the i,j and weight of edge(vi,vj):\n");
 
         p = getchar();
         while(p == '\n')
@@ -116,11 +116,11 @@ void CreateGraph(Graph *g)
         }
         //getchar();
         g->arc[m][n] = w;
-        g->arc[n][m] = g->arc[m][n];  //ÒòÎªÊÇÎŞÏòÍ¼£¬¾ØÕó¶Ô³Æ
+        g->arc[n][m] = g->arc[m][n];  //å› ä¸ºæ˜¯æ— å‘å›¾ï¼ŒçŸ©é˜µå¯¹ç§°
     }
 }
 
-//´òÓ¡Í¼
+//æ‰“å°å›¾
 void printGraph(Graph g)
 {
     int i, j;
@@ -182,7 +182,7 @@ void kruskal(Graph g)
         }
     }
    // printf("%d %d %d",edge[0].weight,edge[1].weight,edge[2].weight);
-    isort(edge , g.numEdges);            //½«ËùÓĞ±ß°´weight´óĞ¡ÅÅĞò
+    isort(edge , g.numEdges);            //å°†æ‰€æœ‰è¾¹æŒ‰weightå¤§å°æ’åº
     printf("the shortest edge : %d\n",edge[0].weight);
     printf("%d %d %d\n",edge[0].weight,edge[1].weight,edge[2].weight);
     for(int i = 0; i < g.numVertexes; i++)
